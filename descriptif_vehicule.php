@@ -1,99 +1,32 @@
-<!DOCTYPE html>
-<html lang='en'>
-   <head>
-      <meta charset='utf-8'>
-      <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-      <meta name='keywords' content='HTML5 Template' />
-      <meta name='description' content='SH Auto - Achats et ventes de véhicules d'occasion' />
-      <meta name='author' content='potenzaglobalsolutions.com' />
-      <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1' />
-      <title>SH Auto - Achats et ventes de véhicules d'occasion</title>
-      <link rel='shortcut icon' href='../images/favicon.ico' />
-      <link rel='stylesheet' type='text/css' href='../css/bootstrap.min.css' />
-      <link rel='stylesheet' type='text/css' href='../css/flaticon.css' />
-      <link rel='stylesheet' type='text/css' href='../css/mega-menu/mega_menu.css' />
-      <link rel='stylesheet' type='text/css' href='../css/font-awesome.min.css' />
-      <link rel='stylesheet' type='text/css' href='../css/slick/slick.css' />
-      <link rel='stylesheet' type='text/css' href='../css/slick/slick-theme.css' />
-      <link rel='stylesheet' type='text/css' href='../css/owl-carousel/owl.carousel.css' />
-      <link rel='stylesheet' type='text/css' href='../css/style.css' />
-      <link rel='stylesheet' type='text/css' href='../css/responsive.css' />
-      <link href='https://fonts.googleapis.com/css?family=Sonsie+One' rel='stylesheet'>
-   </head>
-   <body>
-      <div id='loading'>
-         <div id='loading-center'><img src='../images/loader.gif' alt=''></div>
-      </div>
-      <header id='header' class='defualt'>
-         <div class='topbar'>
-            <div class='container'>
-               <div class='row'>
-                  <div class='col-lg-6 col-md-12'>
-                     <div class='topbar-left text-lg-left text-center'>
-                        <ul class='list-inline'>
-                           <li> <i class='fa fa-envelope-o'> </i> contact@lethauto.com</li>
-                           <li> <i class='fa fa-clock-o'></i> Lun - Sam 9.00 - 19.00. Dim Fermé</li>
-                        </ul>
-                     </div>
-                  </div>
-                  <div class='col-lg-6 col-md-12'>
-                     <div class='topbar-right text-lg-right text-center'>
-                        <ul class='list-inline'>
-                           <li> <i class='fa fa-phone'></i> (+33) 7 82 14 81 41</li>
-                           <li><a href='#'><i class='fa fa-facebook'></i></a></li>
-                           <li><a href='#'><i class='fa fa-twitter'></i></a></li>
-                           <li><a href='#'><i class='fa fa-instagram'></i></a></li>
-                           <li><a href='#'><i class='fa fa-youtube-play'></i></a></li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class='menu'>
-            <nav id='menu' class='mega-menu'>
-               <section class='menu-list-items'>
-                  <div class='container'>
-                     <div class='row'>
-                        <div class='col-md-12'>
-                           <ul class='menu-logo'>
-                              <li>
-                                 <a href='../index.html'><img id='logo_img' src='../images/logo2.png' alt='logo' style='filter: brightness(0) invert(1);'> </a>
-                                 <p id='company-name'style="font-family:'Sonsie One', cursive;color:white;margin-top: 10px;"> SH Auto</p>
-                              </li>
-                           </ul>
-                           <ul class='menu-links'>
-                              <li><a href='../index.html'> Accueil</a></li>
-                              <li class='active'>
-                                 <a href='../listing-01.html'>Voitures <i class='fa fa-angle-down fa-indicator'></i></a>
-                                 <ul class='drop-down-multilevel'>
-                                    <li><a href='../purchase.html'>Achat</a></li>
-                                    <li><a href='../listing-01.html'>Vente</a></li>
-                                    <li><a href='../car-demand.html'>Demande précise</a></li>
-                                 </ul>
-                              </li>
-                              <li>
-                                 <a href='../mecanic.html'> Mécanique <i class='fa fa-angle-down fa-indicator'></i></a>
-                                 <ul class='drop-down-multilevel'>
-                                    <li><a href='../mecanic.html'> Services </a></li>
-                                    <li><a href='../cost-estimate.html'> Devis</a></li>
-                                 </ul>
-                              </li>
-                              <li><a href='../contact.html'> Contact </a></li>
-                              <li><a href='../opinion.html'>Avis </a> </li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
-               </section>
-            </nav>
-         </div>
-      </header>
+<?php
+include("inc/header2.php");
+
+    // Vérifier que j'ai bien recuperer un produit
+    // sinon je suis redirigé vers index.php
+    if(!isset($_GET["id_car"])){
+        header("location:index.php");
+        exit();
+    }
+
+    if(isset($_GET["id_car"])){
+        //echo $_GET["id_car"];
+        $r = $pdo->query("SELECT * FROM cars WHERE id_car
+            = '$_GET[id_car]'");
+
+       $cars = $r->fetchAll(PDO::FETCH_ASSOC); 
+   
+
+    }
+    
+?>
+
+
+
       <section class='inner-intro bg-1 bg-overlay-black-70'>
          <div class='container'>
             <div class='row text-center intro-title'>
                <div class='col-md-6 text-md-left d-inline-block'>
-                  <h1 class='text-white'>206+ 1.1 Trendy</h1>
+                  <h1 class='text-white'><?php echo $cars[0]["model_car"]; ?></h1>
                </div>
                <div class='col-md-6 text-md-right float-right'></div>
             </div>
@@ -103,10 +36,10 @@
          <div class='container'>
             <div class='row'>
                <div class='col-md-9'>
-                  <h3> 206+ 1.1 Trendy </h3>
+                  <h3><?php echo $cars[0]["model_car"]; ?></h3>
                </div>
                <div class='col-md-3'>
-                  <div class='car-price text-lg-right'><strong> 4890 €</strong><span>TTC</span></div>
+                  <div class='car-price text-lg-right'><strong><?php echo $cars[0]["selling_price"]; ?> €</strong><span>TTC</span></div>
                </div>
             </div>
             <div class='row'>
@@ -196,8 +129,34 @@
             <div class='row'>
                <div class='col-md-8'>
                   <div class='slider-slick'>
-                     <div class='slider slider-for detail-big-car-gallery'> <img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/1.jpg' alt=''><img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/2.jpg' alt=''><img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/3.jpg' alt=''><img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/4.jpg' alt=''><img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/5.jpg' alt=''><img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/6.jpg' alt=''><img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/7.jpg' alt=''><img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/8.jpg' alt=''></div>
-                     <div class='slider slider-nav'> <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/1.jpg' alt=''> <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/2.jpg' alt=''> <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/3.jpg' alt=''> <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/4.jpg' alt=''> <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/5.jpg' alt=''> <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/6.jpg' alt=''> <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/7.jpg' alt=''> <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/8.jpg' alt=''> </div>
+                  <!-- CHANGER IMG ICI  -->
+                     <div class='slider slider-for detail-big-car-gallery'>
+
+                        <img class='img-fluid' src='<?php echo $cars[0]["img"]; ?>' alt=''>
+                        <!-- <img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/2.jpg' alt=''>
+                        <img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/3.jpg' alt=''>
+                        <img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/4.jpg' alt=''>
+                        <img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/5.jpg' alt=''>
+                        <img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/6.jpg' alt=''>
+                        <img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/7.jpg' alt=''>
+                        <img class='img-fluid' src='../images/detail/big/206PlusTrendyGrey/8.jpg' alt=''> -->
+                     </div>
+                     
+                     <div class='slider slick-track'> 
+                        <!-- <img class='img-fluid' src='<?php echo $cars[0]["img"]; ?>' alt=''>
+                        <img class='img-fluid' src='<?php echo $cars[0]["img"]; ?>' alt=''> 
+                        <img class='img-fluid' src='<?php echo $cars[0]["img"]; ?>' alt=''> 
+                        <img class='img-fluid' src='<?php echo $cars[0]["img"]; ?>' alt=''> 
+                        <img class='img-fluid' src='<?php echo $cars[0]["img"]; ?>' alt=''>  -->
+                        
+                        <!-- <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/2.jpg' alt=''> 
+                        <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/3.jpg' alt=''> 
+                        <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/4.jpg' alt=''> 
+                        <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/5.jpg' alt=''> 
+                        <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/6.jpg' alt=''> 
+                        <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/7.jpg' alt=''> 
+                        <img class='img-fluid' src='../images/detail/thum/206PlusTrendyGrey/8.jpg' alt=''>  -->
+                     </div>
                   </div>
                   <div id='tabs'>
                      <ul class='tabs'>
@@ -281,18 +240,21 @@
                <div class='col-md-4'>
                   <div class='car-details-sidebar'>
                      <div class='details-block details-weight'>
+
+
+                     
                         <h5>DESCRIPTION</h5>
                         <ul>
-                           <li> <span>Marque</span> <strong class='text-right'>Peugeot</strong></li>
-                           <li> <span>Modèle</span> <strong class='text-right'>206+</strong></li>
-                           <li> <span>Boite</span> <strong class='text-right'>Manuelle</strong></li>
-                           <li> <span>Moteur</span> <strong class='text-right'>1.1 L</strong></li>
-                           <li> <span>Chevaux fiscaux</span> <strong class='text-right'>4</strong></li>
-                           <li> <span>1ère immatriculation </span> <strong class='text-right'>04/10</strong></li>
-                           <li> <span>Kilométrage</span> <strong class='text-right'>36000</strong></li>
-                           <li> <span>Carburant</span> <strong class='text-right'>Essence</strong></li>
-                           <li> <span>Couleur extérieure</span> <strong class='text-right'>Gris metallic</strong></li>
-                           <li> <span>Couleur intérieure</span> <strong class='text-right'>Tissu noir</strong></li>
+                           <li> <span>Marque</span> <strong class='text-right'><?php echo $cars[0]["brand_car"]; ?></strong></li>
+                           <li> <span>Modèle</span> <strong class='text-right'><?php echo $cars[0]["model_car"]; ?></strong></li>
+                           <li> <span>Boite</span> <strong class='text-right'><?php echo $cars[0]["gearbox"]; ?></strong></li>
+                           <li> <span>Moteur</span> <strong class='text-right'><?php echo $cars[0]["motor"]; ?></strong></li>
+                           <li> <span>Chevaux fiscaux</span> <strong class='text-right'><?php echo $cars[0]["cv_car"]; ?></strong></li>
+                           <li> <span>1ère immatriculation </span> <strong class='text-right'><?php echo $cars[0]["first_registration_car"]; ?></strong></li>
+                           <li> <span>Kilométrage</span> <strong class='text-right'><?php echo $cars[0]["km"]; ?></strong></li>
+                           <li> <span>Carburant</span> <strong class='text-right'><?php echo $cars[0]["car_energy"]; ?></strong></li>
+                           <li> <span>Couleur extérieure</span> <strong class='text-right'><?php echo $cars[0]["in_color"]; ?></strong></li>
+                           <li> <span>Couleur intérieure</span> <strong class='text-right'><?php echo $cars[0]["ext_color"]; ?></strong></li>
                         </ul>
                      </div>
                      <div class='details-social details-weight'>
@@ -401,7 +363,10 @@
             </div>
          </div>
       </footer>
-      <div class='car-top'><span><img src='../images/car.png' alt=''></span></div>
-      <script type='text/javascript' src='../js/jquery-3.3.1.min.js'></script><script type='text/javascript' src='../js/popper.js'></script><script type='text/javascript' src='../js/bootstrap.min.js'></script><script type='text/javascript' src='../js/mega-menu/mega_menu.js'></script><script type='text/javascript' src='../js/jquery.appear.js'></script><script type='text/javascript' src='../js/owl-carousel/owl.carousel.min.js'></script><script type='text/javascript' src='../js/slick/slick.min.js'></script><script type='text/javascript' src='../js/select/jquery-select.js'></script><script type='text/javascript' src='../js/magnific-popup/jquery.magnific-popup.min.js'></script> <script type='text/javascript' src='../js/custom.js'></script><script type='text/javascript' src='../js/forms/form-validation.js'></script><script src='https://www.google.com/recaptcha/api.js?render=explicit' async defer></script><script type='text/javascript' src='../js/forms/recaptcha.js'></script>
+      <div class='car-top'><span><img src='images/car.png' alt=''></span></div>
+      <script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
+      <script type='text/javascript' src='js/popper.js'>
+         </script><script type='text/javascript' src='js/bootstrap.min.js'></script><script type='text/javascript' src='../js/mega-menu/mega_menu.js'></script><script type='text/javascript' src='../js/jquery.appear.js'></script><script type='text/javascript' src='../js/owl-carousel/owl.carousel.min.js'></script><script type='text/javascript' src='js/slick/slick.min.js'></script><script type='text/javascript' src='js/select/jquery-select.js'></script><script type='text/javascript' src='js/magnific-popup/jquery.magnific-popup.min.js'></script> <script type='text/javascript' src='js/custom.js'></script><script type='text/javascript' src='js/forms/form-validation.js'></script>
+      <script src='https://www.google.com/recaptcha/api.js?render=explicit' async defer></script><script type='text/javascript' src='js/forms/recaptcha.js'></script>
    </body>
 </html>
